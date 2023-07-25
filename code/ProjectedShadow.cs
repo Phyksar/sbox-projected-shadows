@@ -3,15 +3,33 @@ using System;
 
 namespace Phyksar.ProjectedShadows;
 
+/// <summary>
+/// Creates a shadow texture which is projected towards the up vector of this entity.
+/// </summary>
 public class ProjectedShadow : Entity
 {
+	/// <summary>
+	/// The side dimentions of the projection.
+	/// </summary>
+	public Vector2 Size { get; set; } = new Vector2(256.0f, 256.0f);
+
+	/// <summary>
+	/// The minimum depth of projection and the distance from the entity position along the up vector, can be negative.
+	/// </summary>
+	public float MinDepth { get; set; } = -128.0f;
+
+	/// <summary>
+	/// The maxmimum depth of projection and the distance from the entity position along the up vector, can be negative.
+	/// </summary>
+	public float MaxDepth { get; set; } = 128.0f;
+
+	/// <summary>
+	/// The material used for projection.
+	/// </summary>
 	public Material Material {
 		get => ProjectionMaterial;
 		set => ProjectionBox?.SetMaterialOverride(ProjectionMaterial = value);
 	}
-	public Vector2 Size { get; set; } = new Vector2(256.0f, 256.0f);
-	public float MinDepth { get; set; } = -128.0f;
-	public float MaxDepth { get; set; } = 128.0f;
 
 	private SceneObject ProjectionBox;
 	private Material ProjectionMaterial;
