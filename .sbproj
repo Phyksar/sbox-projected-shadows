@@ -1,0 +1,20 @@
+{
+  "Title": "Projected Shadows",
+  "Type": "library",
+  "Org": "phyksar",
+  "Ident": "projected-shadows",
+  "Tags": "projected texture shader shadow decal overlay",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "Resources": "",
+  "MenuResources": null,
+  "HasCode": true,
+  "CodePath": ".",
+  "PackageReferences": [],
+  "EditorReferences": null,
+  "Metadata": {
+    "ProjectTemplate": null,
+    "CsProjName": ""
+  }
+}
