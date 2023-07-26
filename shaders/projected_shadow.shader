@@ -35,8 +35,11 @@ VS
 {
 	#include "common/vertex.hlsl"
 
+	float4x4 matProjectionTransform <Attribute("ProjectionTransformMatrix"); >;
+
 	PixelInput MainVs(VertexInput v)
 	{
+		v.vPositionOs = mul(matProjectionTransform, float4(v.vPositionOs, 1.0)).xyz;
 		PixelInput i = ProcessVertex(v);
 		return FinalizeVertex(i);
 	}
