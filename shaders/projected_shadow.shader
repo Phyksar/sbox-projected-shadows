@@ -67,12 +67,12 @@ PS
 	RenderState(StencilFailOp, ZERO);
 	RenderState(StencilDepthFailOp, ZERO);
 	RenderState(StencilPassOp, KEEP);
-	RenderState(StencilFunc, NOT_EQUAL);
+	RenderState(StencilFunc, EQUAL);
 	RenderState(BackStencilFailOp, KEEP);
 	RenderState(BackStencilDepthFailOp, KEEP);
 	RenderState(BackStencilPassOp, KEEP);
 	RenderState(BackStencilFunc, NEVER);
-	RenderState(StencilRef, 0x02);
+	RenderState(StencilRef, 0x00);
 
 	CreateInputTexture2D(TextureColor, Srgb, 8, "", "_color", "Material,10/10", Default3(1.0, 1.0, 1.0));
     CreateInputTexture2D(TextureTranslucency, Linear, 8, "", "_trans", "Material,10/70", Default3(1.0, 1.0, 1.0));
