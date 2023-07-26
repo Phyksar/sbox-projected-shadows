@@ -33,7 +33,6 @@ public class ProjectedShadow : Entity
 
 	private SceneObject ProjectionBox;
 	private Material ProjectionMaterial;
-	private int ProjectionBoxHash;
 
 	internal struct Vertex
 	{
@@ -47,8 +46,7 @@ public class ProjectedShadow : Entity
 
 	public ProjectedShadow()
 	{
-		ProjectionBox = new SceneObject(Scene, CreateProjectionBox(Size, MinDepth, MaxDepth));
-		ProjectionBoxHash = GenerateProjectionBoxHash(Size, MinDepth, MaxDepth);
+		ProjectionBox = new SceneObject(Scene, CreateProjectionBox(Vector2.One, 0.0f, 1.0f));
 		ProjectionBox.Flags.CastShadows = false;
 		ProjectionBox.Flags.IsOpaque = false;
 		ProjectionBox.Flags.IsTranslucent = true;
@@ -58,10 +56,8 @@ public class ProjectedShadow : Entity
 	{
 		base.OnDestroy();
 
-		if (ProjectionBox != null) {
-			ProjectionBox.Delete();
-			ProjectionBox = null;
-		}
+		ProjectionBox?.Delete();
+		ProjectionBox = null;
 	}
 
 	private Model CreateProjectionBox(in Vector2 size, float minDepth, float maxDepth)
@@ -104,16 +100,18 @@ public class ProjectedShadow : Entity
 	[GameEvent.PreRender]
 	private void UpdateProjectionBox()
 	{
-		var hash = GenerateProjectionBoxHash(Size, MinDepth, MaxDepth);
-		if (hash != ProjectionBoxHash) {
-			ProjectionBox.Model = CreateProjectionBox(Size, MinDepth, MaxDepth);
-			ProjectionBoxHash = hash;
-		}
-		ProjectionBox.Transform = Transform;
 		var depthRange = MaxDepth - MinDepth;
-		var invTransformMatrix = Matrix.CreateTranslation(-Position + Rotation.Down * MinDepth)
-			* Matrix.CreateRotation(Rotation.Inverse)
-			* Matrix.CreateScale(new Vector3(1.0f / Size.x, 1.0f / Size.y, 1.0f / depthRange));
-		ProjectionBox.Attributes.Set("InvertTransformMatrix", invTransformMatrix);
+		ProjectionBox.Transform = Transform;
+		ProjectionBox.Attributes.Set(
+			"ProjectionTransformMatrix",
+			Matrix.CreateScale(new Vector3(Size.x, Size.y, depthRange))
+				* Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, MinDepth))
+		);
+		ProjectionBox.Attributes.Set(
+			"InvertTransformMatrix",
+			Matrix.CreateTranslation(-Position + Rotation.Down * MinDepth)
+				* Matrix.CreateRotation(Rotation.Inverse)
+				* Matrix.CreateScale(new Vector3(1.0f / Size.x, 1.0f / Size.y, 1.0f / depthRange))
+		);
 	}
 }
