@@ -114,6 +114,6 @@ public class ProjectedShadow : Entity
 		var invTransformMatrix = Matrix.CreateTranslation(-Position + Rotation.Down * MinDepth)
 			* Matrix.CreateRotation(Rotation.Inverse)
 			* Matrix.CreateScale(new Vector3(1.0f / Size.x, 1.0f / Size.y, 1.0f / depthRange));
-		ProjectionBox.Attributes.Set("InvProjectionBoxMatrix", invTransformMatrix);
+		ProjectionBox.Attributes.Set("InvertTransformMatrix", invTransformMatrix);
 	}
 }

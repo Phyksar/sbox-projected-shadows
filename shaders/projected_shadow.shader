@@ -96,7 +96,7 @@ PS
 	float MinDepthCutoff <Default(1.0); Range(0.0, 2.0); UiGroup("Material,10/72"); >;
 	float MaxDepthAlpha <Default(0.0); Range(0.0, 2.0); UiGroup("Material,10/73"); >;
 	float MaxDepthCutoff <Default(1.0); Range(0.0, 2.0); UiGroup("Material,10/74"); >;
-	float4x4 matInvProjectionBox <Attribute("InvProjectionBoxMatrix"); >;
+	float4x4 matInvertTransform <Attribute("InvertTransformMatrix"); >;
 	CreateTexture2DMS(g_tSceneDepth) <
 		Attribute("DepthBuffer");
 		SrgbRead(false);
@@ -146,7 +146,7 @@ PS
 	float4 MainPs(PixelInput i) : SV_Target0
 	{
 		float3 scenePosition = FetchScenePosition(i.vPositionSs.xy);
-		float3 projectedPosition = mul(matInvProjectionBox, float4(scenePosition, 1.0)).xyz;
+		float3 projectedPosition = mul(matInvertTransform, float4(scenePosition, 1.0)).xyz;
 		if (!IsInsideProjection(projectedPosition + float3(0.5, 0.5, 0.0))) {
 			discard;
 		}
