@@ -100,18 +100,19 @@ public class ProjectedShadow : Entity
 	[GameEvent.PreRender]
 	private void UpdateProjectionBox()
 	{
-		var depthRange = MaxDepth - MinDepth;
+		var scaledSize = new Vector3(Size.x, Size.y, MaxDepth - MinDepth) * Scale;
+		var scaledMinDepth = MinDepth * Scale;
 		ProjectionBox.Transform = Transform;
 		ProjectionBox.Attributes.Set(
 			"ProjectionTransformMatrix",
-			Matrix.CreateScale(new Vector3(Size.x, Size.y, depthRange))
-				* Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, MinDepth))
+			Matrix.CreateScale(scaledSize)
+				* Matrix.CreateTranslation(new Vector3(0.0f, 0.0f, scaledMinDepth))
 		);
 		ProjectionBox.Attributes.Set(
 			"InvertTransformMatrix",
-			Matrix.CreateTranslation(-Position + Rotation.Down * MinDepth)
+			Matrix.CreateTranslation(-Position + Rotation.Down * scaledMinDepth)
 				* Matrix.CreateRotation(Rotation.Inverse)
-				* Matrix.CreateScale(new Vector3(1.0f / Size.x, 1.0f / Size.y, 1.0f / depthRange))
+				* Matrix.CreateScale(new Vector3(1.0f / scaledSize.x, 1.0f / scaledSize.y, 1.0f / scaledSize.z))
 		);
 	}
 }
