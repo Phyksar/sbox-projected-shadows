@@ -6,8 +6,8 @@
 .vs/*
 .vscode/*
 *.csproj
-[Oo]bj/*
-[Pp]roperties/*
+[Oo]bj/
+[Pp]roperties/
 
 # Auto-generated asset related files
 *.generated.*

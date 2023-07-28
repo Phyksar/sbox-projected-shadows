@@ -10,11 +10,18 @@
   "Resources": "",
   "MenuResources": null,
   "HasCode": true,
-  "CodePath": ".",
+  "CodePath": "code",
   "PackageReferences": [],
   "EditorReferences": null,
   "Metadata": {
     "ProjectTemplate": null,
-    "CsProjName": ""
+    "CsProjName": "ProjectedShadows",
+    "Compiler": {
+      "RootNamespace": "Sandbox",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;1591;",
+      "References": [],
+      "DistinctReferences": []
+    }
   }
 }
